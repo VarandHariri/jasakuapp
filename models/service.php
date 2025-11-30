@@ -21,9 +21,7 @@ class Service {
 
     // CREATE SERVICE
     public function create() {
-        $query = "INSERT INTO " . $this->table_name . " 
-                  SET provider_id=:provider_id, category_id=:category_id, title=:title, 
-                      description=:description, price=:price, images=:images";
+        $query = "INSERT INTO " . $this->table_name . " SET provider_id=:provider_id, category_id=:category_id, title=:title, description=:description, price=:price, images=:images";
         
         $stmt = $this->conn->prepare($query);
         
@@ -43,11 +41,11 @@ class Service {
     // GET ALL SERVICES (Untuk home page)
     public function getServices() {
         $query = "SELECT s.*, u.nama as provider_name, u.profile_image as provider_image, c.name as category_name 
-                  FROM " . $this->table_name . " s
-                  LEFT JOIN users u ON s.provider_id = u.id
-                  LEFT JOIN categories c ON s.category_id = c.id
-                  WHERE s.is_active = 1
-                  ORDER BY s.created_at DESC";
+                FROM " . $this->table_name . " s
+                LEFT JOIN users u ON s.provider_id = u.id
+                LEFT JOIN categories c ON s.category_id = c.id
+                WHERE s.is_active = 1
+                ORDER BY s.created_at DESC";
         
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -58,11 +56,11 @@ class Service {
     // GET SERVICES BY CATEGORY
     public function getServicesByCategory($category_id) {
         $query = "SELECT s.*, u.nama as provider_name, u.profile_image as provider_image, c.name as category_name 
-                  FROM " . $this->table_name . " s
-                  LEFT JOIN users u ON s.provider_id = u.id
-                  LEFT JOIN categories c ON s.category_id = c.id
-                  WHERE s.category_id = :category_id AND s.is_active = 1
-                  ORDER BY s.created_at DESC";
+                FROM " . $this->table_name . " s
+                LEFT JOIN users u ON s.provider_id = u.id
+                LEFT JOIN categories c ON s.category_id = c.id
+                WHERE s.category_id = :category_id AND s.is_active = 1
+                ORDER BY s.created_at DESC";
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":category_id", $category_id);
@@ -74,10 +72,10 @@ class Service {
     // GET SERVICES BY PROVIDER (Untuk profile provider)
     public function getServicesByProvider($provider_id) {
         $query = "SELECT s.*, c.name as category_name 
-                  FROM " . $this->table_name . " s
-                  LEFT JOIN categories c ON s.category_id = c.id
-                  WHERE s.provider_id = :provider_id
-                  ORDER BY s.created_at DESC";
+                FROM " . $this->table_name . " s
+                LEFT JOIN categories c ON s.category_id = c.id
+                WHERE s.provider_id = :provider_id
+                ORDER BY s.created_at DESC";
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":provider_id", $provider_id);
@@ -89,11 +87,11 @@ class Service {
     // GET SERVICE BY ID (Detail service)
     public function getServiceById($id) {
         $query = "SELECT s.*, u.nama as provider_name, u.profile_image as provider_image, 
-                         u.phone as provider_phone, u.email as provider_email, c.name as category_name 
-                  FROM " . $this->table_name . " s
-                  LEFT JOIN users u ON s.provider_id = u.id
-                  LEFT JOIN categories c ON s.category_id = c.id
-                  WHERE s.id = :id";
+                        u.phone as provider_phone, u.email as provider_email, c.name as category_name 
+                FROM " . $this->table_name . " s
+                LEFT JOIN users u ON s.provider_id = u.id
+                LEFT JOIN categories c ON s.category_id = c.id
+                WHERE s.id = :id";
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
@@ -105,9 +103,9 @@ class Service {
     // UPDATE SERVICE
     public function update() {
         $query = "UPDATE " . $this->table_name . " 
-                  SET title=:title, description=:description, price=:price, 
-                      category_id=:category_id, images=:images, is_active=:is_active
-                  WHERE id=:id AND provider_id=:provider_id";
+                SET title=:title, description=:description, price=:price, 
+                    category_id=:category_id, images=:images, is_active=:is_active
+                WHERE id=:id AND provider_id=:provider_id";
         
         $stmt = $this->conn->prepare($query);
         
